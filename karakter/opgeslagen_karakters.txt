@@ -3,3 +3,4 @@ lynn;elf;slim
 jochem;mens;sterk
 marlon;dwerg;charismatisch
 
+Hoi;mens;eigenschap1

@@ -14,14 +14,17 @@ def ga_naar_hoofdmenu(venster):
 
 # maakt het venster voor karakter selectie aan
 def maak_karakter_selectie_scherm_aan(venster):
+
     for widget in venster.winfo_children():
         widget.destroy()
 
     # pakt karakters uit de textfile met gecreeerde karakters
     def lees_karakters_uit_bestand():
         karakters = []
+        cwd = os.getcwd()
         try:
-            with open("../karakter/opgeslagen_karakters.txt", "r") as bestand:
+            path = cwd + "/karakter/opgeslagen_karakters.txt"
+            with open(path, "r") as bestand:
                 for line in bestand:
                     parts = line.strip().split(";")
                     lengte_karakter_info = 3

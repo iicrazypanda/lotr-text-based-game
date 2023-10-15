@@ -1,5 +1,7 @@
-import tkinter as tk
-from tkinter import Label, Button
+import os
+from tkinter import Label, Frame, Button, Canvas
+
+from app.achtergrond import maak_achtergrond
 from karakter.karakter_menu import maak_karakter_menu_scherm_aan
 from PIL import ImageTk, Image
 
@@ -19,32 +21,20 @@ def maak_hoofdmenu_scherm_aan(venster):
     for widget in venster.winfo_children():
         widget.destroy()
 
-    hoofdmenu_titel = Label(venster, text="Welkom, avonturier!", font=("Helvetica", 36))
+    canvas = maak_achtergrond(venster, "/images/real_rivendell.jpg")
 
-    karakter_button = Button(text="Karakter Menu",width=40, height=2, command=lambda : ga_naar_karakter_menu_scherm(venster))
-    avontuur_kiezen = Button(text="Avontuur Kiezen", width=40, height=2,command=lambda : ga_naar_avontuurmenu(venster))
-    admin_button = Button(text="Admin login", width= 40, height=2,command=lambda : ga_naar_admin_scherm(venster))
+    content_frame = Frame(canvas, bg="#444444")
 
+    hoofdmenu_titel = Label(content_frame, text="Welkom, Avonturier!", font=("Helvetica", 36), bg="#444444", fg="white")
+    hoofdmenu_titel.pack(pady=20, padx=20)
 
-    # original background settings
-    original_image = Image.open("../images/rivendell.png")
-    resized_image = original_image.resize((1200, 700), Image.LANCZOS)
-    voorbeeld_image = ImageTk.PhotoImage(resized_image)
+    karakter_button = Button(content_frame, text="Karakter Menu", width=40, height=2, bg="#333333", fg="white", command=lambda: ga_naar_karakter_menu_scherm(canvas))
+    karakter_button.pack(pady=20, padx=20)
 
-    label_image = Label(venster, image=voorbeeld_image)
-    label_image.image = voorbeeld_image
-    label_image.tkraise()
+    avontuur_kiezen = Button(content_frame, text="Avontuur Kiezen", width=40, height=2, bg="#333333", fg="white", command=lambda: ga_naar_avontuurmenu(canvas))
+    avontuur_kiezen.pack(pady=20, padx=20)
 
+    admin_button = Button(content_frame, text="Admin login", width=40, height=2, bg="#333333", fg="white", command=lambda: ga_naar_admin_scherm(canvas))
+    admin_button.pack(pady=20, padx=20)
 
-    hoofdmenu_titel.pack()
-    label_image.pack()
-    karakter_button.pack()
-    avontuur_kiezen.pack()
-    admin_button.pack()
-
-# venster = tk.Tk()
-# venster.attributes("-fullscreen", True)  # Make the window fullscreen
-#
-# maak_hoofdmenu_scherm_aan(venster)
-#
-# venster.mainloop()
+    content_frame.pack(expand=True, anchor="center")

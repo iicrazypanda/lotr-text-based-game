@@ -1,5 +1,7 @@
+import os
 from tkinter import Frame, Label, Button
 
+from app.achtergrond import maak_achtergrond
 from avonturen.eind_scherm import maak_eind_scherm_aan
 
 def ga_naar_avonturen_start_scherm(venster, avontuur):
@@ -13,7 +15,8 @@ def ga_naar_eind_scherm(venster, vragen_lijst, gemaakte_keuzes, avontuur):
     maak_eind_scherm_aan(venster, vragen_lijst, gemaakte_keuzes, avontuur)
 
 def avontuur_uitlezen(avontuur_nummer):
-    path = "../avonturen/avontuur" + avontuur_nummer + ".txt"
+    cwd = os.getcwd()
+    path = cwd + "/avonturen/avontuur" + avontuur_nummer + "/avontuur" + avontuur_nummer + ".txt"
     with open(path, "r") as bestand:
         data = bestand.read()
 
@@ -112,6 +115,8 @@ def maak_avontuur_scherm_aan(venster, avontuur):
     for widget in venster.winfo_children():
         widget.destroy()
 
+    canvas = maak_achtergrond(venster, "/images/real_rivendell.jpg")
+
     welkom_text = ""
     if avontuur == "1":
         welkom_text = "welkom dit is avontuur: reis in de gouw"
@@ -120,20 +125,20 @@ def maak_avontuur_scherm_aan(venster, avontuur):
     elif avontuur == "3":
         welkom_text = "welkom dit is avontuur: queeste erebor"
 
-    frame_terug_naar_avonturen_menu = Frame(venster)
+    frame_terug_naar_avonturen_menu = Frame(canvas)
     frame_terug_naar_avonturen_menu.pack()
 
     button_terug_naar_avonturen_menu = Button(frame_terug_naar_avonturen_menu, text="Terug naar avonturen menu", width=30, height=2,
                                           command=lambda: ga_naar_avonturen_menu_scherm(venster))
     button_terug_naar_avonturen_menu.pack()
 
-    label_frame = Frame(venster)
+    label_frame = Frame(canvas)
 
     welkom_label = Label(label_frame, text=welkom_text, font="Helvetica 16")
     welkom_label.grid(row=0, column=0, columnspan=2, pady=20)
 
     start_button = Button(label_frame, text="Start Avontuur",
-                          command=lambda: toon_vraag(venster, huidige_vraag, vragen_lijst, gemaakte_keuzes, avontuur))
+                          command=lambda: toon_vraag(canvas, huidige_vraag, vragen_lijst, gemaakte_keuzes, avontuur))
     start_button.grid(row=1, column=0, columnspan=2)
 
     label_frame.pack(expand=True)

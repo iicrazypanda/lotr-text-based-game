@@ -1,3 +1,4 @@
+import os
 from tkinter import Label, Entry, Frame, Listbox, StringVar, Button, messagebox
 from tkinter.ttk import Style, Radiobutton
 
@@ -18,8 +19,10 @@ def karakter_opslaan_confirmatie(naam_karakter, gekozen_ras, lijst_eigenschappen
 
 
 def compleet_gekozen_karakter_opslaan(gekozen_naam, ras, eigenschap):
+    cwd = os.getcwd()
+    path = cwd + "/karakter/opgeslagen_karakters.txt"
     compleet_gekozen_karakter_van_gebruiker = f"{gekozen_naam};{ras};{eigenschap}\n"
-    with open("../karakter/opgeslagen_karakters.txt", "a") as opslaan_bestand:
+    with open(path, "a") as opslaan_bestand:
         opslaan_bestand.write(compleet_gekozen_karakter_van_gebruiker)
 
 
@@ -55,7 +58,10 @@ def maak_karakter_creatie_scherm_aan(venster):
     for widget in venster.winfo_children():
         widget.destroy()
 
-    with open("../karakter/rassen.txt", "r") as bestand:
+    cwd = os.getcwd()
+    path = cwd + "/karakter/rassen.txt"
+
+    with open(path, "r") as bestand:
         data = bestand.read()
     ras_lijst = data.splitlines()
 

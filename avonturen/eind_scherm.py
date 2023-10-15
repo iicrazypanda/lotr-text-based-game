@@ -1,8 +1,10 @@
+import os
 from tkinter import Label, Frame, Button
 
 
 def einde_uitlezen(avontuur_nummer):
-    path = "../avonturen/eindes" + avontuur_nummer + ".txt"
+    cwd = os.getcwd()
+    path = cwd + "/avonturen/avontuur" + avontuur_nummer + "/eindes" + avontuur_nummer + ".txt"
     with open(path, "r") as bestand:
         data = bestand.read()
 
